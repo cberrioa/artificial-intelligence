@@ -55,9 +55,14 @@ def naked_twins(values):
     Pseudocode for this algorithm on github:
     https://github.com/udacity/artificial-intelligence/blob/master/Projects/1_Sudoku/pseudocode.md
     """
-    # TODO: Implement this function!
-    raise NotImplementedError
-
+    out = values.copy()
+    for boxA in values:
+        for boxB in peers[boxA]:
+            if(values[boxA]==values[boxB] and len(values[boxA])==2):
+                for peer in list(set(peers[boxA])&set(peers[boxB])):
+                    for digit in values[boxA]:
+                        out[peer] = out[peer].replace(digit,"")
+    return out
 
 def eliminate(values):
     """Apply the eliminate strategy to a Sudoku puzzle
@@ -143,6 +148,8 @@ def reduce_puzzle(values):
         values = eliminate(values)
         # Your code here: Use the Only Choice Strategy
         values = only_choice(values)
+
+        values = naked_twins(values)
         # Check how many boxes have a determined value, to compare
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         # If no new values were added, stop the loop.
