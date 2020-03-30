@@ -61,7 +61,8 @@ def naked_twins(values):
             if(values[boxA]==values[boxB] and len(values[boxA])==2):
                 for peer in list(set(peers[boxA])&set(peers[boxB])):
                     for digit in values[boxA]:
-                        out[peer] = out[peer].replace(digit,"")
+                        #out[peer] = out[peer].replace(digit,"")
+                        assign_value(out, peer, out[peer].replace(digit,""))
     return out
 
 def eliminate(values):
@@ -84,7 +85,8 @@ def eliminate(values):
         val = values[key]
         if(len(val) == 1):
             for peer_key in peers[key]:
-                values[peer_key] = values[peer_key].replace(val,"")
+                #values[peer_key] = values[peer_key].replace(val,"")
+                assign_value(values, peer_key, values[peer_key].replace(val,""))
     
     return values
 
@@ -121,7 +123,8 @@ def only_choice(values):
                 #print(candidates)
                 for value in values[key]:
                     if value not in candidates:
-                        values[key] = value
+                        #values[key] = value
+                        assign_value(values, key, value)
     return values
 
 
